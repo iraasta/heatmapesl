@@ -1167,6 +1167,9 @@ setInterval(function () {
     var y = _ref.y;
     return { value: a * 0.997, x: x, y: y };
   });
+  data = data.filter(function (a) {
+    return a.value > 1;
+  });
   heatmap.setData({ max: 5, data: data });
 }, 30);
 

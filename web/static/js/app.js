@@ -46,6 +46,7 @@ var randCoord = () => Math.round(Math.random()*800)
 
 setInterval(()=>{
   data = data.map(({value: a, x: x,y: y} ) => { return {value: a * 0.997, x:x, y:y} });
+  data = data.filter( (a)=> a.value > 1 );
   heatmap.setData({max: 5, data: data});
 }, 30);
 
