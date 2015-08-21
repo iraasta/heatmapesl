@@ -1141,20 +1141,20 @@ var socket = new _depsPhoenixWebStaticJsPhoenix.Socket("/socket");
 socket.connect();
 var chan = socket.channel("rooms:lobby", {});
 
-chan.on("datapoint", function (dp) {});
+chan.on("datapoint", function (dp) {
+  addData(dp.x, dp.y, dp.value);
+  //  console.log(dp);
+});
 
-chan.join().receive("ok", function (chan) {
+chan.join().receive("ok", function (_chan) {
   console.log("Welcome to Phoenix Chat!");
+  chan.push("subscribe");
 });
 
 window.heatmap = h337.create({
   container: document.getElementById("heatmap")
 });
 window.data = [{ x: 10, y: 15, value: 5 }];
-heatmap.setData({
-  max: 5,
-  data: data
-});
 
 var randCoord = function randCoord() {
   return Math.round(Math.random() * 800);
@@ -1165,14 +1165,18 @@ setInterval(function () {
     var a = _ref.value;
     var x = _ref.x;
     var y = _ref.y;
-    return { value: a * 0.996, x: x, y: y };
+    return { value: a * 0.997, x: x, y: y };
   });
-  data.push({ value: 4, x: randCoord(), y: randCoord() });
   heatmap.setData({ max: 5, data: data });
 }, 30);
+
+function addData(x, y, value) {
+  data.push({ value: value, x: x, y: y });
+  heatmap.setData({ max: 5, data: data });
+}
 });
 
-require.register("web/static/js/socket", function(exports, require, module) {
+;require.register("web/static/js/socket", function(exports, require, module) {
 // NOTE: The contents of this file will only be executed if
 // you uncomment its entry in "web/static/js/app.js".
 

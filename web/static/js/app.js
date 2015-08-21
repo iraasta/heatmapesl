@@ -27,27 +27,29 @@ socket.connect();
 let chan = socket.channel("rooms:lobby", {});
 
 chan.on("datapoint", dp => {
-  
+  addData(dp.x, dp.y, dp.value);
+//  console.log(dp);
 });
 	
 
-chan.join().receive("ok", chan => {
+chan.join().receive("ok", _chan => {
   console.log("Welcome to Phoenix Chat!");
+  chan.push("subscribe");
 });
 
 window.heatmap = h337.create({
   container: document.getElementById("heatmap")
 });
 window.data = [{ x: 10, y: 15, value: 5}];
-heatmap.setData({
-  max: 5,
-  data: data
-});
 
 var randCoord = () => Math.round(Math.random()*800)
 
 setInterval(()=>{
-  data = data.map(({value: a, x: x,y: y} ) => { return {value: a * 0.996, x:x, y:y} });
-  data.push( { value: 4, x: randCoord() , y: randCoord()});
+  data = data.map(({value: a, x: x,y: y} ) => { return {value: a * 0.997, x:x, y:y} });
   heatmap.setData({max: 5, data: data});
 }, 30);
+
+function addData(x, y, value){
+  data.push( { value: value, x: x , y: y});
+  heatmap.setData({max: 5, data: data});
+}
