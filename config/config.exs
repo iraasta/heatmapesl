@@ -7,11 +7,11 @@ use Mix.Config
 
 config :hedwig, :clients, [
 	%{
-		jid: "heatmap@xmpp.jp",
-		password: "test1234",
+		jid: "test@iot.net",
+		password: "test",
 		nickname: "heatmap",
 		rooms: [
-			"heatmap@xmpp.jp"
+			"test@iot.net"
 		],
 		config: %{
 			require_tls?: false,
@@ -33,7 +33,8 @@ config :heatmap, Heatmap.Endpoint,
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+  metadata: [:request_id],
+	level: :error
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

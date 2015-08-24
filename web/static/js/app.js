@@ -11,7 +11,7 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-import "deps/phoenix_html/web/static/js/phoenix_html"
+import "deps/phoenix_html/web/static/js/phoenix_html";
 
 // Import local files
 //
@@ -19,7 +19,7 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
-import {Socket} from "deps/phoenix/web/static/js/phoenix"
+import {Socket} from "deps/phoenix/web/static/js/phoenix";
 
 
 let socket = new Socket("/socket");
@@ -28,34 +28,50 @@ let chan = socket.channel("heatmap:data", {});
 var heatmapCanvas = document.getElementById("heatmap");
 var C_WIDTH = heatmapCanvas.offsetWidth;
 var C_HEIGHT = heatmapCanvas.offsetHeight;
-var MAX_VAL = 653;
+var MAX_VAL = 150;
+var CLEAR_FACTOR = 0.995;
+var DP_FORCE = 1;
 
 chan.on("datapoint", dp => {
   console.log("Got datapoint");
   console.log(dp);
-  addData(dp.distance/MAX_VAL*C_WIDTH, C_HEIGHT/2, 0.5);
+  addData(dp.distance/MAX_VAL*C_WIDTH, C_HEIGHT/2, DP_FORCE);
 });
 	
 
 chan.join().receive("ok", _chan => {
   console.log("Welcome to Phoenix Chat!");
+  try {
+    window.heatmap = createWebGLHeatmap({canvas: heatmapCanvas}); 
+  } catch (e) {
+    console.warn(e);
+  }
+  heatmap.display();
+  init();
  });
 
-window.heatmap = h337.create({
-  container: heatmapCanvas
-});
+
 window.data = [];
 
 var randCoord = () => Math.round(Math.random()*800)
 
-setInterval(()=>{
-  data = data.map(({value: a, x: x,y: y} ) => { return {value: a * 0.98, x:x, y:y} });
-  data = data.filter( (a)=> a.value > 0.3 );
-  heatmap.setData({max: 5, data: data});
-}, 500);
+function init(){
+  setInterval(()=>{
+    //data = data.map(({value: a, x: x,y: y} ) => { return {value: a * CLEAR_FACTOR, x:x, y:y} });
+    //data = data.filter( (a)=> a.value > 0.3 );
+    //heatmap.setData({max: 5, data: data});
+    //addData(Math.random()*100, 50, 0.1);
+    heatmap.multiply(CLEAR_FACTOR);
+    heatmap.update();
+    heatmap.display();
+  }, 30);
+};
+
 
 function addData(x, y, value){
-  data.push( { value: value, x: x , y: y});
-  heatmap.setData({max: 5, data: data});
+  heatmap.addPoint(x, y, 25, value);
+  console.log("data");
+  //data.push( { value: value, x: x , y: y});
+  //heatmap.setData({max: 5, data: data});
 }
 
