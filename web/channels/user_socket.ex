@@ -2,7 +2,7 @@ defmodule Heatmap.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "rooms:*", Heatmap.RoomChannel
+  channel "heatmap:*", Heatmap.HeatmapChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

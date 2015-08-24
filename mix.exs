@@ -18,7 +18,7 @@ defmodule Heatmap.Mixfile do
   def application do
     [mod: {Heatmap, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :hedwig, :exml]]
   end
 
   # Specifies which paths to compile per environment
@@ -34,6 +34,8 @@ defmodule Heatmap.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.0"},
      {:phoenix_live_reload, "~> 0.6", only: :dev},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+		 {:hedwig, "~> 0.1.0"},
+		 {:exml, github: "paulgray/exml"}]
   end
 end

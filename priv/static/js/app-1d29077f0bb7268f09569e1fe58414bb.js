@@ -1148,11 +1148,12 @@ var MAX_VAL = 653;
 chan.on("datapoint", function (dp) {
   console.log("Got datapoint");
   console.log(dp);
-  addData(dp.distance / MAX_VAL * C_WIDTH, C_HEIGHT / 2, 0.5);
+  addData(dp.distance / MAX_VAL * C_WIDTH, C_HEIGHT / 2, 4);
 });
 
 chan.join().receive("ok", function (_chan) {
   console.log("Welcome to Phoenix Chat!");
+  chan.push("subscribe");
 });
 
 window.heatmap = h337.create({

@@ -5,6 +5,22 @@
 # is restricted to this project.
 use Mix.Config
 
+config :hedwig, :clients, [
+	%{
+		jid: "heatmap@xmpp.jp",
+		password: "test1234",
+		nickname: "heatmap",
+		rooms: [
+			"heatmap@xmpp.jp"
+		],
+		config: %{
+			require_tls?: false,
+			use_compression?: false,
+			use_stream_management?: true,
+			transport: :tcp
+		},
+		handlers: [{Heatmap.DataHandler, %{}}]
+}]
 # Configures the endpoint
 config :heatmap, Heatmap.Endpoint,
   url: [host: "localhost"],

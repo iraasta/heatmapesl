@@ -8,7 +8,9 @@
     <meta name="author" content="">
 
     <title>Hello Phoenix!</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/lib/jquery-ui/jquery-ui.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    
   </head>
 
   <body>
@@ -26,6 +28,7 @@
       <%= @inner %>
 
     </div> <!-- /container -->
+    <script src="<%= static_path(@conn, "/lib/jquery-ui/jquery-ui.js") %>"></script>
     <script src="<%= static_path(@conn, "/js/heatmap.js") %>"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>

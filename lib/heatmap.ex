@@ -5,9 +5,9 @@ defmodule Heatmap do
   # for more information on OTP Applications
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
-
+		
     children = [
-      # Start the endpoint when the application starts
+      # Start the endpoint when th1e application starts
       supervisor(Heatmap.Endpoint, []),
       # Start the Ecto repository
       worker(Heatmap.Repo, []),
