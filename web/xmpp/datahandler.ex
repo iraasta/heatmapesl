@@ -3,7 +3,7 @@ defmodule Heatmap.DataHandler do
 
 	use Hedwig.Handler
 	def handle_event(%Message{} = msg, opts) do
-		case Regex.run ~r/b(\d+) ([\d\/]+) ([\d:]+) (\d+)/, msg.body do
+		case Regex.run ~r/(\d+) ([\d\/]+) ([\d:]+) (\d+)/, msg.body do
 			[_msg, distance, date, time, id] ->
 				{distance, _} = Integer.parse(distance)
 				dp = %{distance: distance, date: date, time: time, id: id}

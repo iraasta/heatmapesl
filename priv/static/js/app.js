@@ -1143,9 +1143,9 @@ var chan = socket.channel("heatmap:data", {});
 var heatmapCanvas = document.getElementById("heatmap");
 var C_WIDTH = heatmapCanvas.offsetWidth;
 var C_HEIGHT = heatmapCanvas.offsetHeight;
-var MAX_VAL = 150;
-var CLEAR_FACTOR = 0.995;
-var DP_FORCE = 1;
+var MAX_VAL = 200;
+var CLEAR_FACTOR = 0.99;
+var DP_FORCE = 0.5;
 
 chan.on("datapoint", function (dp) {
   console.log("Got datapoint");
@@ -1183,7 +1183,7 @@ function init() {
 };
 
 function addData(x, y, value) {
-  heatmap.addPoint(x, y, 25, value);
+  heatmap.addPoint(x, y, 100, value);
   console.log("data");
   //data.push( { value: value, x: x , y: y});
   //heatmap.setData({max: 5, data: data});
