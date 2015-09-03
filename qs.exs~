@@ -1,0 +1,7 @@
+defmodule Qs do
+	def sort([]), do: []
+	def sort([pivot | tail]) do
+		{small, r} = Enum.partition fn a -> a < pivot end
+		sort(small) <> pivot <> sort(rest) 
+	end
+end
