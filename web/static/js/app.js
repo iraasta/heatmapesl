@@ -26,29 +26,36 @@ let socket = new Socket("/socket");
 socket.connect();
 let chan = socket.channel("heatmap:data", {});
 var heatmapCanvas = document.getElementById("heatmap");
+window.heatmapCanvas = heatmapCanvas;
+var heatmapContext = heatmapCanvas.getContext("webgl");
 var C_WIDTH = heatmapCanvas.offsetWidth;
 var C_HEIGHT = heatmapCanvas.offsetHeight;
-var MAX_VAL = 200;
-var CLEAR_FACTOR = 0.99;
+var MAX_VAL = 350;
+var CLEAR_FACTOR = 0.98;
 var DP_FORCE = 0.5;
 
 chan.on("datapoint", dp => {
-  console.log("Got datapoint");
-  console.log(dp);
-  addData(dp.distance/MAX_VAL*C_WIDTH, C_HEIGHT/2, DP_FORCE);
+   addData(dp.distance/MAX_VAL*C_WIDTH, C_HEIGHT/2, DP_FORCE);
 });
 	
 
 chan.join().receive("ok", _chan => {
   console.log("Welcome to Phoenix Chat!");
-  try {
-    window.heatmap = createWebGLHeatmap({canvas: heatmapCanvas}); 
-  } catch (e) {
-    console.warn(e);
-  }
+  window.heatmap = createWebGLHeatmap({canvas: heatmapCanvas});
   heatmap.display();
   init();
- });
+});
+
+
+window.makeBase = function makeBase(){
+  var base_image = new Image();
+  base_image.src = 'images/espress.png';
+  base_image.onload = function(){
+    base_image.style.top = "100px"
+    base_image.style.left = "100px"
+    console.log("hmm?");
+  };
+}
 
 
 window.data = [];
@@ -70,7 +77,7 @@ function init(){
 
 function addData(x, y, value){
   heatmap.addPoint(x, y, 100, value);
-  console.log("data");
+  //console.log("data");
   //data.push( { value: value, x: x , y: y});
   //heatmap.setData({max: 5, data: data});
 }
