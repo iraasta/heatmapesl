@@ -1147,7 +1147,7 @@ var C_WIDTH = heatmapCanvas.offsetWidth;
 var C_HEIGHT = heatmapCanvas.offsetHeight;
 var MAX_VAL = 350;
 var CLEAR_FACTOR = 0.98;
-var DP_FORCE = 0.001;
+var DP_FORCE = 0.01;
 
 chan.on("datapoint", function (dp) {
   addData(dp.x * 10, dp.y * 10, 647 - dp.distance, DP_FORCE);
@@ -1188,8 +1188,8 @@ function init() {
   }, 30);
 };
 
-function addData(x, y, value) {
-  heatmap.addPoint(x, y, 50, value);
+function addData(x, y, size, value) {
+  heatmap.addPoint(x, y, size, value);
 }
 });
 
