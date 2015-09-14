@@ -31,11 +31,11 @@ var heatmapContext = heatmapCanvas.getContext("webgl");
 var C_WIDTH = heatmapCanvas.offsetWidth;
 var C_HEIGHT = heatmapCanvas.offsetHeight;
 var MAX_VAL = 350;
-var CLEAR_FACTOR = 0.98;
+var CLEAR_FACTOR = 0.995;
 var DP_FORCE = 0.5;
 
 chan.on("datapoint", dp => {
-   addData(dp.distance/MAX_VAL*C_WIDTH, C_HEIGHT/2, DP_FORCE);
+  addData(dp.x*10, dp.y*10, 647 - dp.distance , DP_FORCE);
 });
 	
 
@@ -76,9 +76,6 @@ function init(){
 
 
 function addData(x, y, value){
-  heatmap.addPoint(x, y, 100, value);
-  //console.log("data");
-  //data.push( { value: value, x: x , y: y});
-  //heatmap.setData({max: 5, data: data});
+  heatmap.addPoint(x, y, 50, value);
 }
 

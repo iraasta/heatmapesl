@@ -52,10 +52,10 @@ defmodule Heatmap.DataHandler do
 	def handle_event(%Message{} = msg, opts) do
     #data = xml_to_map(msg) |> find(["event","items","item","entry", "data"])
     
-		case Regex.run ~r/(\d+) ([\d\/]+) ([\d:]+) (\d+)/, msg.body do
-			[_msg, distance, date, time, id] ->
+		case Regex.run ~r/(\d+) ([\d\/]+) ([\d:]+) (\d+),(\d+)/, msg.body do
+			[_msg, distance, date, time, x, y] ->
 				{distance, _} = Integer.parse(distance)
-				dp = %{distance: distance, date: date, time: time, id: id}
+				dp = %{distance: distance, date: date, time: time, x: x, y: y}
 				Heatmap.Endpoint.broadcast! "heatmap:data", "datapoint", dp 
 			_ ->  IO.puts "No match"
 		end
